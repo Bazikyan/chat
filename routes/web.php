@@ -16,3 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/chats/', [\App\Http\Controllers\ChatsController::class, 'fetchChats'])->middleware(['auth']);
+Route::get('/chats/{id}/', function () {
+    return view('chat');
+})->middleware(['auth']);
+
+Route::get('/api/chats/{id}/', [\App\Http\Controllers\ChatsController::class, 'fetchMessages'])->middleware(['auth']);
+Route::post('/api/chats/{id}/', [\App\Http\Controllers\ChatsController::class, 'sendMessage'])->middleware(['auth']);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
